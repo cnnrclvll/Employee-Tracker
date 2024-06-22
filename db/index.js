@@ -37,27 +37,31 @@ class Database {
   }
 
 // ** FIND ONE EMPLOYEE ** //
+// ----------------------- //
+// --- !! NOT IN USE !! -- //
+// ----------------------- //
 // select one employee and all relevant information including role, department, and manager by id
 // passing employeeId
-  employeeFindOne(employeeId) {
-    return this.connection.promise().query(
-        `SELECT 
-            employee.id, employee.first_name, employee.last_name, 
-            role.title, role.salary, 
-            department.name AS department, 
-            CONCAT(manager.first_name, ' ', manager.last_name) AS manager 
-        FROM 
-            employee 
-        LEFT JOIN 
-            role on employee.role_id = role.id 
-        LEFT JOIN 
-            department on role.department_id = department.id 
-        LEFT JOIN 
-            employee manager on manager.id = employee.manager_id
-        WHERE 
-            id = ?;`, [employeeId]
-    );
-  }
+
+//   employeeFindOne(employeeId) {
+//     return this.connection.promise().query(
+//         `SELECT 
+//             employee.id, employee.first_name, employee.last_name, 
+//             role.title, role.salary, 
+//             department.name AS department, 
+//             CONCAT(manager.first_name, ' ', manager.last_name) AS manager 
+//         FROM 
+//             employee 
+//         LEFT JOIN 
+//             role on employee.role_id = role.id 
+//         LEFT JOIN 
+//             department on role.department_id = department.id 
+//         LEFT JOIN 
+//             employee manager on manager.id = employee.manager_id
+//         WHERE 
+//             id = ?;`, [employeeId]
+//     );
+//   }
 
 // ** FIND ALL POSSIBLE MANAGERS ** //
 // select all employee's id except for the employee whose manager is being searched for
@@ -139,7 +143,7 @@ class Database {
     );
   }
 
-// ** UPDATE EMPLOYEE'S MANAGER * //
+// ** UPDATE EMPLOYEE MANAGER * //
 // update employee by setting the value of manager_id where employeeId matches
 // passing employeeId and new managerId
   employeeManager(employeeId, managerId) {
@@ -168,20 +172,24 @@ class Database {
   }
 
 // ** FIND ONE ROLE ** //
+// ------------------- //
+//  !! NOT IN USE !!   //
+// ------------------- //
 // select one role and all relevant information including department
 // passing roleId
-  roleFindOne(roleId) {
-    return this.connection.promise().query(
-        `SELECT 
-            role.id, role.title, role.salary, department.name AS department 
-        FROM 
-            role 
-        LEFT JOIN 
-            department on role.department_id = department.id
-        WHERE 
-            id = ?;`, [roleId]
-    );
-  }
+
+//   roleFindOne(roleId) {
+//     return this.connection.promise().query(
+//         `SELECT 
+//             role.id, role.title, role.salary, department.name AS department 
+//         FROM 
+//             role 
+//         LEFT JOIN 
+//             department on role.department_id = department.id
+//         WHERE 
+//             id = ?;`, [roleId]
+//     );
+//   }
 
 // ** CREATE NEW ROLE ** //
 // insert role object into role table
@@ -227,18 +235,22 @@ class Database {
   }
 
 // ** FIND ONE DEPARTMENT ** //
+// ------------------------- //
+// --- !! NOT IN USE !! ---- //
+// ------------------------- //
 // select one department and all relevant information
 // passing departmentId
-  departmentFindOne(departmentId) {
-    return this.connection.promise().query(
-        `SELECT 
-            department.id, department.name 
-        FROM 
-            department
-        WHERE 
-            id = ?;`, [departmentId]
-    );
-  }
+
+//   departmentFindOne(departmentId) {
+//     return this.connection.promise().query(
+//         `SELECT 
+//             department.id, department.name 
+//         FROM 
+//             department
+//         WHERE 
+//             id = ?;`, [departmentId]
+//     );
+//   }
 
 // ** CREATE NEW DEPARTMENT ** //
 // insert department object into department table
@@ -278,26 +290,30 @@ class Database {
   }
 
 // ** FIND ONE DEPARTMENT BUDGET ** //
+// -------------------------------- //
+// ------- !! NOT IN USE !! ------- //
+// -------------------------------- //
 // Find department where id matches, join related employees and roles, take sum of dept employee's role salary (not in this order)
 // passing nothing
-  departmentBudgetOne(departmentId) {
-    return this.connection.promise().query(
-        `SELECT 
-            department.id, department.name, 
-            SUM(role.salary) AS utilized_budget 
-        FROM 
-            employee 
-        LEFT JOIN 
-            role on employee.role_id = role.id 
-        LEFT JOIN 
-            department on role.department_id = department.id 
-        WHERE
-            id = ?
-        GROUP BY 
-            department.id, department.name;`, 
-        [departmentId]
-    );
-  }
+
+//   departmentBudgetOne(departmentId) {
+//     return this.connection.promise().query(
+//         `SELECT 
+//             department.id, department.name, 
+//             SUM(role.salary) AS utilized_budget 
+//         FROM 
+//             employee 
+//         LEFT JOIN 
+//             role on employee.role_id = role.id 
+//         LEFT JOIN 
+//             department on role.department_id = department.id 
+//         WHERE
+//             id = ?
+//         GROUP BY 
+//             department.id, department.name;`, 
+//         [departmentId]
+//     );
+//   }
 }
 
 module.exports = new Database(connection);
