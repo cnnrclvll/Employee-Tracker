@@ -11,7 +11,7 @@ function init() {
 // ------------//
 
 // configure and log title
-  const appTitle = title({ name: "MUSEUM DATABASE" }).render();
+  const appTitle = title({ name: "EMPLOYEE DATABASE" }).render();
   console.log(appTitle);
 
 // run main menu prompts
@@ -207,7 +207,7 @@ function byDeptEmployee() {
           choices: choices
         }
       ])
-        .then(res => db.departmentFindAll(res.departmentId))
+        .then(res => db.employeeByDept(res.departmentId))
         .then(([rows]) => {
           let employees = rows;
           console.log("\n");
@@ -267,7 +267,7 @@ function byManagerEmployee() {
 // pass user choice by employeeId to db function
 // log confirmation and return user to main menu
 function deleteEmployee() {
-  db.findAllEmployees()
+  db.employeeFindAll()
     .then(([rows]) => {
       let employees = rows;
       const choices = employees.map(({ id, first_name, last_name }) => ({
@@ -299,7 +299,7 @@ function deleteEmployee() {
 // send user input as roleId and employeeId to db func
 // log confirmation and return user to main menu
 function roleEmployee() {
-  db.findAllEmployees()
+  db.employeeFindAll()
     .then(([rows]) => {
       let employees = rows;
       const choicesEmp = employees.map(({ id, first_name, last_name }) => ({
@@ -316,7 +316,7 @@ function roleEmployee() {
       ])
         .then(res => {
           let employeeId = res.employeeId;
-          db.findAllRoles()
+          db.roleFindAll()
             .then(([rows]) => {
               let roles = rows;
               const choicesRole = roles.map(({ id, title }) => ({
@@ -349,7 +349,7 @@ function roleEmployee() {
 // pass user selection as employeeId and managerId to db function
 // log confirmation and send user to main menu
 function managerEmployee() {
-  db.findAllEmployees()
+  db.employeeFindAll()
     .then(([rows]) => {
       let employees = rows;
       const choicesEmp = employees.map(({ id, first_name, last_name }) => ({
@@ -382,7 +382,7 @@ function managerEmployee() {
                   choices: choicesMngr
                 }
               ])
-                .then(res => db.employeeRole(employeeId, res.managerId))
+                .then(res => db.employeeManager(employeeId, res.managerId))
                 .then(() => console.log("Successfully updated record!"))
                 .then(() => mainMenu())
             })
