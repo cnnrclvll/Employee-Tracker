@@ -4,8 +4,8 @@ const mysql = require("mysql2"); // require mysql
 
 const connection = mysql.createConnection({ // run createConnection mysql method
   host: "localhost", // locally running
-  user: "root", // most likely root
-  password: "Nova5$5$ter", // sensitive
+  user: "", // most likely root
+  password: "", // sensitive
   database: "employee_roster" // db name
 });
 
